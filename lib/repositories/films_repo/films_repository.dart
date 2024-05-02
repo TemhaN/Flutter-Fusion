@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-// import 'package:flutter/material.dart';
 import '/api/api_config.dart';
 import 'models/Film.dart';
 
@@ -12,6 +11,7 @@ class FilmsRepository {
         .map((filmData) => Film(
               name: filmData['name'],
               year_of_issue: int.parse(filmData['year_of_issue']),
+              ratingAvg: (filmData['ratingAvg'] ?? 0).toDouble(),
               link_img: filmData['link_img'],
             ))
         .toList();

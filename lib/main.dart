@@ -4,3 +4,4 @@ import 'package:flutter_fusion/fusion_app.dart';
 void main() {
   runApp(const Fusion());
 }
+

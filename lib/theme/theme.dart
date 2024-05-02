@@ -23,5 +23,8 @@ final FusionTheme = ThemeData(
         color: Colors.white24,
         fontWeight: FontWeight.w300,
         fontSize: 14,
+      ),
+      labelLarge: TextStyle(
+        fontSize: 20,
       )),
 );

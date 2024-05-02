@@ -14,3 +14,4 @@ class Fusion extends StatelessWidget {
     );
   }
 }
+
