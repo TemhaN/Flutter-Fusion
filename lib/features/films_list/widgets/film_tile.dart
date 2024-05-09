@@ -18,14 +18,12 @@ class FilmTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            margin: const EdgeInsets.symmetric(
-                horizontal: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ClipRRect(
-                  borderRadius:
-                      BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(15),
                   child: Image.network(
                     film.link_img,
                     height: 350,
@@ -52,13 +50,12 @@ class FilmTile extends StatelessWidget {
                       Icons.star_border_outlined,
                       color: Colors.yellow,
                     ),
-                    SizedBox(
-                        width:
-                            4),
+                    SizedBox(width: 4),
                     Text(
                       '${film.ratingAvg}',
-                      style: theme.textTheme.labelSmall
-                              ?.copyWith(color: Colors.yellow, fontSize: 17,
+                      style: theme.textTheme.labelSmall?.copyWith(
+                            color: Colors.yellow,
+                            fontSize: 17,
                           ) ??
                           TextStyle(),
                     ),
@@ -70,6 +67,8 @@ class FilmTile extends StatelessWidget {
                   style: theme.textTheme.labelLarge
                           ?.copyWith(color: Colors.white) ??
                       TextStyle(),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   '${film.year_of_issue}',
