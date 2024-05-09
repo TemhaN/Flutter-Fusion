@@ -41,58 +41,60 @@ class _FilmsListScreenState extends State<FilmsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BlurredAppBar(),
-      body: FutureBuilder<List<Film>>(
-        future: _filmsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            final filmsList = snapshot.data!;
-            return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.45,
-              ),
-              padding: const EdgeInsets.all(16),
-              itemCount: filmsList.length,
-              itemBuilder: (context, index) {
-                final film = filmsList[index];
-                return FilmTile(film: film);
-              },
-            );
-          }
-        },
-      ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30.0),
-          topRight: Radius.circular(30.0),
+        appBar: BlurredAppBar(),
+        body: FutureBuilder<List<Film>>(
+          future: _filmsFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              final filmsList = snapshot.data!;
+              return GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.45,
+                ),
+                padding: const EdgeInsets.all(16),
+                itemCount: filmsList.length,
+                itemBuilder: (context, index) {
+                  final film = filmsList[index];
+                  return FilmTile(film: film);
+                },
+              );
+            }
+          },
         ),
-        child: BottomAppBar(
-          shape: CircularNotchedRectangle(),
-          color: Colors.white10,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.home_filled, color: _selectedIndex == 0 ? Colors.blue : Colors.grey),
-                onPressed: () => _onItemTapped(0),
-              ),
-              IconButton(
-                icon: Icon(Icons.search_rounded, color: _selectedIndex == 1 ? Colors.blue : Colors.grey),
-                onPressed: () => _onItemTapped(1),
-              ),
-              IconButton(
-                icon: Icon(Icons.person_3, color: _selectedIndex == 2 ? Colors.blue : Colors.grey),
-                onPressed: () => _onItemTapped(2),
-              ),
-            ],
+        bottomNavigationBar: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
           ),
-        ),
-      )
-    );
+          child: BottomAppBar(
+            shape: CircularNotchedRectangle(),
+            color: Colors.white10,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.home_filled,
+                      color: _selectedIndex == 0 ? Colors.blue : Colors.grey),
+                  onPressed: () => _onItemTapped(0),
+                ),
+                IconButton(
+                  icon: Icon(Icons.search_rounded,
+                      color: _selectedIndex == 1 ? Colors.blue : Colors.grey),
+                  onPressed: () => _onItemTapped(1),
+                ),
+                IconButton(
+                  icon: Icon(Icons.person_3,
+                      color: _selectedIndex == 2 ? Colors.blue : Colors.grey),
+                  onPressed: () => _onItemTapped(2),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }

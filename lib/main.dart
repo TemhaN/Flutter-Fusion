@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fusion/fusion_app.dart';
+import 'package:Fusion/fusion_app.dart';
 
 void main() {
   runApp(const Fusion());

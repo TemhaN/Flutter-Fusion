@@ -1,5 +1,5 @@
-name: flutter_fusion
-description: "Fusion mobile project"
+name: Fusion
+description: 'Fusion mobile project'
 publish_to: 'none'
 version: 0.0.1+1
 
@@ -18,15 +18,20 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'assets/images/fusion.svg'
 
 flutter:
-
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

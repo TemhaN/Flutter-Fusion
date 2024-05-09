@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class BlurredAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
 
-  const BlurredAppBar({Key? key, this.height = kToolbarHeight}) : super(key: key);
+  const BlurredAppBar({Key? key, this.height = kToolbarHeight})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +16,9 @@ class BlurredAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
           child: AppBar(
-            title: const Text('Films List'),
+            title: const Text('Каталог'),
             backgroundColor: Colors.black.withOpacity(0.1),
-            elevation: 0, 
+            elevation: 0,
           ),
         ),
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fusion/router/router.dart';
+import 'package:Fusion/router/router.dart';
 import 'theme/theme.dart';
 
 class Fusion extends StatelessWidget {
@@ -14,4 +14,3 @@ class Fusion extends StatelessWidget {
     );
   }
 }
-
