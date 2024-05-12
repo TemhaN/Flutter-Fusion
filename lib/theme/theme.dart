@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 final FusionTheme = ThemeData(
-  scaffoldBackgroundColor: const Color.fromARGB(255, 41, 41, 41),
+  scaffoldBackgroundColor: const Color(0xFF262626),
   colorScheme:
       ColorScheme.fromSeed(seedColor: const Color.fromRGBO(69, 70, 85, 1)),
   useMaterial3: true,
@@ -13,7 +13,7 @@ final FusionTheme = ThemeData(
       elevation: 10,
       titleTextStyle: TextStyle(
           color: Colors.white, fontSize: 25, fontWeight: FontWeight.w700)),
-      textTheme: const TextTheme(
+  textTheme: const TextTheme(
       bodyMedium: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.w500,

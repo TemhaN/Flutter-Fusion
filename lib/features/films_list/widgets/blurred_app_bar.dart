@@ -17,7 +17,7 @@ class BlurredAppBar extends StatelessWidget implements PreferredSizeWidget {
           filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
           child: AppBar(
             title: const Text('Каталог'),
-            backgroundColor: Colors.black.withOpacity(0.1),
+            backgroundColor: Color.fromRGBO(38, 38, 38, 0.1),
             elevation: 0,
           ),
         ),

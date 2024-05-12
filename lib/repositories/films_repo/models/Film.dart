@@ -4,7 +4,7 @@ class Film {
       required this.name,
       required this.year_of_issue,
       required this.ratingAvg,
-      required this.link_img});
+      required this.link_img,});
 
   final int id;
   final String name;
