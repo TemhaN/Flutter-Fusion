@@ -7,7 +7,8 @@ class FilmDetails {
   final String link_video;
   final int age;
   final int duration;
-  // Добавьте другие свойства фильма, если необходимо
+  final List<String> categories; // список категорий
+  final String country; // страна
 
   FilmDetails({
     required this.id,
@@ -18,10 +19,18 @@ class FilmDetails {
     required this.link_video,
     required this.age,
     required this.duration,
-    // Добавьте другие свойства фильма, если необходимо
+    required this.categories, // добавлен список категорий
+    required this.country, // добавлена страна
   });
 
   factory FilmDetails.fromJson(Map<String, dynamic> json) {
+    // Преобразуем список категорий в список имен
+    List<String> categories = List<String>.from(
+        json['categories']?.map((category) => category['name']) ?? []);
+
+    // Извлекаем имя страны из объекта
+    String country = json['country']['name'].toString();
+
     return FilmDetails(
       id: json['id'],
       name: json['name'],
@@ -31,7 +40,8 @@ class FilmDetails {
       link_video: json['link_video'],
       age: json['age'],
       duration: json['duration'],
-      // Добавьте другие свойства фильма, если необходимо
+      categories: categories,
+      country: country,
     );
   }
 }

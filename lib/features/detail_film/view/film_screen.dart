@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -35,9 +37,7 @@ class FilmDetailsScreen extends StatelessWidget {
                       children: [
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.width *
-                              9 /
-                              16, // Пропорции плеера 16:9
+                          height: MediaQuery.of(context).size.width * 9 / 16,
                           child: YoutubePlayer(
                             controller: YoutubePlayerController(
                               initialVideoId: filmDetails.link_video,
@@ -78,35 +78,93 @@ class FilmDetailsScreen extends StatelessWidget {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.fromLTRB(25.0, 35.0, 26.0, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            filmDetails.name,
-                            style: Theme.of(context).textTheme.headline6,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  filmDetails.name,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.star_border_outlined,
+                                    color: Colors.yellow,
+                                  ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    '${filmDetails.ratingAvg}',
+                                    style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall
+                                            ?.copyWith(
+                                              color: Colors.yellow,
+                                              fontSize: 17,
+                                            ) ??
+                                        TextStyle(),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 5),
                           Text(
-                            'Year of Issue: ${filmDetails.year_of_issue}',
-                            style: Theme.of(context).textTheme.subtitle1,
+                            '${filmDetails.year_of_issue}',
+                            style: TextStyle(
+                              color: Colors.white12,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                          SizedBox(height: 10),
-                          Text(
-                            'Rating: ${filmDetails.ratingAvg}',
-                            style: Theme.of(context).textTheme.subtitle1,
+                          Container(
+                            padding: EdgeInsets.fromLTRB(0, 30, 0, 5),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 10),
+                                Text(
+                                  '${filmDetails.country}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  '${filmDetails.duration} мин.',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          SizedBox(height: 10),
-                          Text(
-                            'Age: ${filmDetails.age}',
-                            style: Theme.of(context).textTheme.subtitle1,
+                          SizedBox(height: 20),
+                          Wrap(
+                            spacing: 2,
+                            children: filmDetails.categories
+                                .map((category) => Chip(
+                                      label: Text(
+                                        category,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      backgroundColor: Colors.grey[800],
+                                    ))
+                                .toList(),
                           ),
-                          SizedBox(height: 10),
-                          Text(
-                            'Duration: ${filmDetails.duration}',
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                          // Добавьте другие детали фильма, если необходимо
                         ],
                       ),
                     ),
