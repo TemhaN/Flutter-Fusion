@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, file_names
+
 class FilmDetails {
   final int id;
   final String name;
@@ -7,8 +9,8 @@ class FilmDetails {
   final String link_video;
   final int age;
   final int duration;
-  final List<String> categories; // список категорий
-  final String country; // страна
+  final List<String> categories;
+  final String country;
 
   FilmDetails({
     required this.id,
@@ -19,16 +21,14 @@ class FilmDetails {
     required this.link_video,
     required this.age,
     required this.duration,
-    required this.categories, // добавлен список категорий
-    required this.country, // добавлена страна
+    required this.categories,
+    required this.country,
   });
 
   factory FilmDetails.fromJson(Map<String, dynamic> json) {
-    // Преобразуем список категорий в список имен
     List<String> categories = List<String>.from(
         json['categories']?.map((category) => category['name']) ?? []);
 
-    // Извлекаем имя страны из объекта
     String country = json['country']['name'].toString();
 
     return FilmDetails(

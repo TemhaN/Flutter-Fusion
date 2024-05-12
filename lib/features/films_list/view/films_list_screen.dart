@@ -1,11 +1,17 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/blurred_app_bar.dart';
 import '../widgets/film_tile.dart';
 import '/repositories/films_repo/models/Film.dart';
 import '/repositories/films_repo/films_repository.dart';
 
 class FilmsListScreen extends StatefulWidget {
+  const FilmsListScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _FilmsListScreenState createState() => _FilmsListScreenState();
 }
 
@@ -41,18 +47,18 @@ class _FilmsListScreenState extends State<FilmsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: BlurredAppBar(),
+        appBar: const BlurredAppBar(),
         body: FutureBuilder<List<Film>>(
           future: _filmsFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else {
               final filmsList = snapshot.data!;
               return GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 0.45,
                 ),
@@ -67,28 +73,28 @@ class _FilmsListScreenState extends State<FilmsListScreen> {
           },
         ),
         bottomNavigationBar: ClipRRect(
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(30.0),
             topRight: Radius.circular(30.0),
           ),
           child: BottomAppBar(
-            shape: CircularNotchedRectangle(),
+            shape: const CircularNotchedRectangle(),
             color: Colors.white10,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.home_filled,
+                  icon: Icon(FontAwesomeIcons.house,
                       color: _selectedIndex == 0 ? Colors.blue : Colors.grey),
                   onPressed: () => _onItemTapped(0),
                 ),
                 IconButton(
-                  icon: Icon(Icons.search_rounded,
+                  icon: Icon(FontAwesomeIcons.search,
                       color: _selectedIndex == 1 ? Colors.blue : Colors.grey),
                   onPressed: () => _onItemTapped(1),
                 ),
                 IconButton(
-                  icon: Icon(Icons.person_3,
+                  icon: Icon(FontAwesomeIcons.solidUser,
                       color: _selectedIndex == 2 ? Colors.blue : Colors.grey),
                   onPressed: () => _onItemTapped(2),
                 ),

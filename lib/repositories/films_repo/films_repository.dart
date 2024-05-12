@@ -28,18 +28,7 @@ class FilmsRepository {
     return FilmDetails.fromJson(data);
   }
 
-  // Future<List<String>> getActorsByFilmId(int id) async {
-  //   final actorsResponse =
-  //       await Dio().get('${ApiConfig.baseUrl}/film/$id/actors');
-
-  //   final actorsData = actorsResponse.data as Map<String, dynamic>;
-
-  //   return List<String>.from(
-  //       actorsData['actors']?.map((actor) => actor['name']) ?? []);
-  // }
-
-
-    Future<List<Actor>> getActorsByFilmId(int id) async {
+  Future<List<Actor>> getActorsByFilmId(int id) async {
     final actorsResponse =
         await Dio().get('${ApiConfig.baseUrl}/film/$id/actors');
 

@@ -5,9 +5,9 @@ import 'package:Fusion/repositories/films_repo/models/Film.dart';
 
 class FilmTile extends StatelessWidget {
   const FilmTile({
-    Key? key,
+    super.key,
     required this.film,
-  }) : super(key: key);
+  });
 
   final Film film;
 
@@ -46,7 +46,7 @@ class FilmTile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                 ],
               ),
             ),
@@ -57,27 +57,27 @@ class FilmTile extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.star_border_outlined,
                         color: Colors.yellow,
                       ),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(
                         '${film.ratingAvg}',
                         style: theme.textTheme.labelSmall?.copyWith(
                               color: Colors.yellow,
                               fontSize: 17,
                             ) ??
-                            TextStyle(),
+                            const TextStyle(),
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     film.name,
                     style: theme.textTheme.labelLarge
                             ?.copyWith(color: Colors.white) ??
-                        TextStyle(),
+                        const TextStyle(),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -85,7 +85,7 @@ class FilmTile extends StatelessWidget {
                     '${film.year_of_issue}',
                     style: theme.textTheme.labelSmall
                             ?.copyWith(color: Colors.white54) ??
-                        TextStyle(),
+                        const TextStyle(),
                   ),
                 ],
               ),

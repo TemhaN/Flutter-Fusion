@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import
+
 import 'dart:ui';
 
 import 'package:Fusion/repositories/films_repo/models/Actors.dart';
@@ -34,7 +36,7 @@ class FilmDetailsScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment:
-                      CrossAxisAlignment.start, // Изменили на start
+                      CrossAxisAlignment.start,
                   children: [
                     Stack(
                       children: [
