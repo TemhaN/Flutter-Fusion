@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:Fusion/repositories/films_repo/models/Actors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -7,6 +8,8 @@ import '/repositories/films_repo/models/FilmDetail.dart';
 import '/repositories/films_repo/films_repository.dart';
 
 class FilmDetailsScreen extends StatelessWidget {
+  const FilmDetailsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final args =
@@ -16,11 +19,11 @@ class FilmDetailsScreen extends StatelessWidget {
       future: FilmsRepository().getFilmDetailsById(id),
       builder: (BuildContext context, AsyncSnapshot<FilmDetails> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         } else if (snapshot.hasError) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(child: Text('Error loading film details')),
           );
         } else {
@@ -49,12 +52,13 @@ class FilmDetailsScreen extends StatelessWidget {
                             ),
                             showVideoProgressIndicator: true,
                             progressColors: const ProgressBarColors(
-                                playedColor: Color(0xFFE779B5),
-                                handleColor: Colors.black54),
+                              playedColor: Color(0xFFE779B5),
+                              handleColor: Colors.black54,
+                            ),
                           ),
                         ),
                         Positioned(
-                          top: 16, // Отступ от верхнего края
+                          top: 16,
                           left: 16,
                           child: IconButton(
                             icon: const Icon(Icons.arrow_back_ios,
@@ -65,14 +69,12 @@ class FilmDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top: 16, // Отступ от верхнего края
+                          top: 16,
                           right: 16,
                           child: IconButton(
                             icon: const Icon(FontAwesomeIcons.heart,
                                 size: 25, color: Colors.white),
-                            onPressed: () {
-                              // Действия по нажатию на кнопку "Еще"
-                            },
+                            onPressed: () {},
                           ),
                         ),
                       ],
@@ -88,7 +90,7 @@ class FilmDetailsScreen extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   filmDetails.name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
@@ -97,11 +99,11 @@ class FilmDetailsScreen extends StatelessWidget {
                               ),
                               Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.star_border_outlined,
                                     color: Colors.yellow,
                                   ),
-                                  SizedBox(width: 4),
+                                  const SizedBox(width: 4),
                                   Text(
                                     '${filmDetails.ratingAvg}',
                                     style: Theme.of(context)
@@ -111,39 +113,39 @@ class FilmDetailsScreen extends StatelessWidget {
                                               color: Colors.yellow,
                                               fontSize: 17,
                                             ) ??
-                                        TextStyle(),
+                                        const TextStyle(),
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Text(
                             '${filmDetails.year_of_issue}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white12,
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(0, 30, 0, 5),
+                            padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 Text(
-                                  '${filmDetails.country}',
-                                  style: TextStyle(
+                                  filmDetails.country,
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 Text(
                                   '${filmDetails.duration} мин.',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
@@ -152,18 +154,82 @@ class FilmDetailsScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Wrap(
-                            spacing: 2,
                             children: filmDetails.categories
-                                .map((category) => Chip(
-                                      label: Text(
-                                        category,
-                                        style: TextStyle(color: Colors.white),
+                                .map((category) => Padding(
+                                      padding: const EdgeInsets.all(2),
+                                      child: Chip(
+                                        label: Text(
+                                          category,
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                        ),
+                                        backgroundColor: Colors.grey[800],
                                       ),
-                                      backgroundColor: Colors.grey[800],
                                     ))
                                 .toList(),
+                          ),
+                          const SizedBox(height: 20),
+                          FutureBuilder(
+                            future: FilmsRepository().getActorsByFilmId(id),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List<Actor>> actorSnapshot) {
+                              if (actorSnapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              } else if (actorSnapshot.hasError) {
+                                return const Text('Error loading actors');
+                              } else {
+                                final actors = actorSnapshot.data!;
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Актеры:',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: actors
+                                          .map(
+                                            (actor) => Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 13),
+                                              child: Row(
+                                                children: [
+                                                  CircleAvatar(
+                                                    backgroundImage:
+                                                        NetworkImage(
+                                                            actor.img_link),
+                                                    radius: 20,
+                                                  ),
+                                                  const SizedBox(width: 10),
+                                                  Text(
+                                                    actor.name,
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                          .toList(),
+                                    ),
+                                  ],
+                                );
+                              }
+                            },
                           ),
                         ],
                       ),
