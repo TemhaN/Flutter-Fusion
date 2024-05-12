@@ -1,3 +1,5 @@
+import 'package:Fusion/repositories/films_repo/films_repository.dart';
+import 'package:Fusion/repositories/films_repo/models/FilmDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:Fusion/repositories/films_repo/models/Film.dart';
 
@@ -14,7 +16,11 @@ class FilmTile extends StatelessWidget {
     final theme = Theme.of(context);
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed('/film', arguments: film);
+        Navigator.pushNamed(
+          context,
+          '/film',
+          arguments: {'id': film.id},
+        );
       },
       borderRadius: BorderRadius.circular(20),
       child: Padding(

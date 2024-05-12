@@ -1,3 +1,4 @@
+import 'package:Fusion/repositories/films_repo/models/FilmDetail.dart';
 import 'package:dio/dio.dart';
 import '/api/api_config.dart';
 import 'models/Film.dart';
@@ -9,6 +10,7 @@ class FilmsRepository {
     final data = response.data as Map<String, dynamic>;
     final filmsList = (data['films'] as List<dynamic>)
         .map((filmData) => Film(
+              id: filmData['id'],
               name: filmData['name'],
               year_of_issue: int.parse(filmData['year_of_issue']),
               ratingAvg: (filmData['ratingAvg'] ?? 0).toDouble(),
@@ -16,5 +18,12 @@ class FilmsRepository {
             ))
         .toList();
     return filmsList;
+  }
+
+  Future<FilmDetails> getFilmDetailsById(int id) async {
+    final response = await Dio().get('${ApiConfig.baseUrl}/film/$id');
+
+    final data = response.data as Map<String, dynamic>;
+    return FilmDetails.fromJson(data);
   }
 }
