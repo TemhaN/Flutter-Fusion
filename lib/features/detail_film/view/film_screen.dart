@@ -1,8 +1,9 @@
-// ignore_for_file: unnecessary_import
+// ignore_for_file: unnecessary_import, prefer_const_constructors
 
 import 'dart:ui';
-
+import 'package:intl/intl.dart';
 import 'package:Fusion/repositories/films_repo/models/Actors.dart';
+import 'package:Fusion/repositories/films_repo/models/Reviews.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -35,8 +36,7 @@ class FilmDetailsScreen extends StatelessWidget {
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Stack(
                       children: [
@@ -187,47 +187,208 @@ class FilmDetailsScreen extends StatelessWidget {
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      'Актеры:',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: actors
-                                          .map(
-                                            (actor) => Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 13),
-                                              child: Row(
-                                                children: [
-                                                  CircleAvatar(
-                                                    backgroundImage:
-                                                        NetworkImage(
-                                                            actor.img_link),
-                                                    radius: 20,
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  Text(
-                                                    actor.name,
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w400,
+                                    if (actors.isNotEmpty)
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 10),
+                                          const Text(
+                                            'Актеры:',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: actors
+                                                .map(
+                                                  (actor) => Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 13),
+                                                    child: Row(
+                                                      children: [
+                                                        CircleAvatar(
+                                                          backgroundImage:
+                                                              NetworkImage(actor
+                                                                  .img_link),
+                                                          radius: 20,
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 10),
+                                                        Text(
+                                                          actor.name,
+                                                          style:
+                                                              const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
-                                                ],
+                                                )
+                                                .toList(),
+                                          ),
+                                        ],
+                                      ),
+                                  ],
+                                );
+                              }
+                            },
+                          ),
+                          FutureBuilder(
+                            future: FilmsRepository().getReviewsByFilmId(id),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List<Reviews>> reviewSnapshot) {
+                              if (reviewSnapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              } else if (reviewSnapshot.hasError) {
+                                return Text('Error loading reviews');
+                              } else {
+                                final reviews = reviewSnapshot.data!;
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 8),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: TextFormField(
+                                              decoration: InputDecoration(
+                                                hintText:
+                                                    'Добавить комментарий...',
+                                                hintStyle: TextStyle(
+                                                    color: Colors.grey[400]),
+                                                border: OutlineInputBorder(),
                                               ),
                                             ),
-                                          )
-                                          .toList(),
+                                          ),
+                                          SizedBox(width: 8),
+                                          ElevatedButton(
+                                            onPressed: () {},
+                                            child: Text('Отправить'),
+                                          ),
+                                        ],
+                                      ),
                                     ),
+                                    if (reviews.isNotEmpty)
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            'Отзывы:',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: reviews.length,
+                                            itemBuilder: (context, index) {
+                                              final review = reviews[index];
+                                              final formattedDate =
+                                                  DateFormat('yyyy-MM-dd HH:mm')
+                                                      .format(review.createdAt);
+                                              return ListTile(
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 16,
+                                                        vertical: 8),
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          review.user,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        SizedBox(width: 4),
+                                                        Text(
+                                                          '●',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .grey[400]),
+                                                        ),
+                                                        SizedBox(width: 4),
+                                                        Text(
+                                                          formattedDate,
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .grey[400]),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                            FontAwesomeIcons
+                                                                .heart,
+                                                            color: Colors
+                                                                .grey[400]),
+                                                        SizedBox(width: 2),
+                                                        Text(
+                                                          review.likesCount
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .grey[400]),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                subtitle: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 8),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        review.message,
+                                                        style: TextStyle(
+                                                          color:
+                                                              Colors.grey[400],
+                                                          fontSize: 17,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                   ],
                                 );
                               }
