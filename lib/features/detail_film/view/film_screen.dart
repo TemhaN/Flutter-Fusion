@@ -125,7 +125,7 @@ class FilmDetailsScreen extends StatelessWidget {
                           Text(
                             '${filmDetails.year_of_issue}',
                             style: const TextStyle(
-                              color: Colors.white12,
+                              color: Colors.white54,
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
                             ),
